@@ -4,7 +4,6 @@
 *.o
 *.d
 *.obj
-arch_flags
 # Precompiled Headers
 *.gch
 *.pch
@@ -23,5 +22,7 @@ arch_flags
 *.exe
 *.out
 *.app
-# vim temp files
+# other files
 *.swp
+arch_flags
+tags
