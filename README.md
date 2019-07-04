@@ -86,4 +86,4 @@ abc 07> tp -p
 bin/minisat+ pg.opb
 ```
 ## Contact
-Please send an email to Nian-Ze Lee (d04943019@ntu.edu.tw, nianzelee@gmail.com) if you have any problem using the code
+Please send an email to Nian-Ze Lee (d04943019@ntu.edu.tw, nianzelee@gmail.com) if there is any problem
