@@ -152,36 +152,21 @@ alias synth1      "&get; &synch2; &if -n -K 8; dsd_filter -t; &get; &synch2; &if
 alias synth2      "&get; &synch2; &if -n -K 8; dsd_filter -s; &get; &synch2; &if -k -K 8; dsd_ps; &ps"
 alias synthio     "synth1; &put; comb; print_fanio"
 
-# Threshold logic operation command
-## I/O commands
+# Threshold logic collapse operation and verification command
+## I/O
 alias rt  "read_th"
 alias wt  "write_th"
 alias pt  "print_th"
-## Synthesis commands
+## Synthesis
 alias a2t "aig2th"
 alias mt  "merge_th"
-alias t2b "th2blif"
+## Verification
 alias t2m "th2mux"
-## Verification commands
-alias pb  "PB_th"
-alias cnf "CNF_th"
 alias tvr "thverify"
-## misc commands
-alias tt  "test_th"
-alias ft  "profile_th"
-alias mpt "mt; pt"
+alias thpg "tp"
 
 # For experiment
 alias aig_no_ite "comb; fraig; ps; a2t; pt; mt; pt"
 alias aig_ite "comb; fraig; ps; a2t; pt; mt -B 100; pt"
 alias tlc_no_ite "comb; fraig; synth1; pt; mt; pt"
 alias tlc_ite "comb; fraig; synth1; pt; mt -B 100; pt"
-
-alias thexp  "st; ps; synthio; pt; mt -B 100; pt"
-alias thexp1 "comb; fraig; synthio; mt -B 100"
-alias thexp2 "st; ps; synthio; pt; mt; pt"
-alias thexp3 "a2t; pt; mt; pt"
-alias ecexp  "comb; fraig; synth1; t2b compTH_1.blif; t2m; w compTH.aig; mt; NZ; OAO; t2m; time; cec -n compTH.aig; t2b compTH_2.blif; time; cec -n compTH_1.blif compTH_2.blif; time"
-alias ecexp1 "comb; fraig; synth1; t2b compTH_1.blif; t2m; w compTH.aig; mt -B 100; NZ; OAO; t2m; time; cec -n compTH.aig; t2b compTH_2.blif; time; cec -n compTH_1.blif compTH_2.blif; time"
-alias ecexp2 "thexp1; NZ; OAO"
-alias ecexp3 "thexp1; OAO;"
