@@ -7,8 +7,9 @@
 ## Contents
 1. [Installation](#installation)
 2. [Commands](#commands)
-3. [Examples](#examples)
-4. [Contact](#contact)
+3. [Benchmark](#benchmark)
+4. [Examples](#examples)
+5. [Contact](#contact)
 ## Installation
 Type `make` to complie and the executable file is `bin/abc`
 ```
@@ -17,17 +18,22 @@ make
 It has been compiled successfully with GCC\_VERSION=8.2.0 under CentOS 7.3.1611
 ## Commands:
 ### I/O:
-- read_th (rt): read a .th file (POs must be buffered)
-- write_th (wt): write current_TList out as a .th file
-- print_th (pt): print network statistics of current_TList
+- `read_th` (alias `rt`): read a TLC file in the `.th` format (POs must be buffered)
+- `write_th` (alias `wt`): write the current TLC out in the `.th` format
+- `print_th` (alias `pt`): print the network statistics of the current TLC
 ### Synthesis:
-- aig2th (a2t): convert an AIG to a TLC by replacing an AND gate with a TLG [1,1;2]
-- merge_th (mt): the collapsing-based TLC synthesis
+- `aig2th` (alias `a2t`): convert an AIG circuit to a TLC by replacing AIG nodes with TLGs
+- `merge_th` (alias `mt`): the proposed collapsing-based TLC synthesis
 ### Verification:
-- th2mux (t2m): convert a TLC to an AIG by expanding a TLG to a MUX tree
-- thverify (tvr): write a CNF/PB file for the equivalence checking of two TLCs
-- thpg (tp): write a PB file for the output satisfiability of a TLC with PG encoding
-## Usage examples
+- `th2mux` (alias `t2m`): convert a TLC to an AIG circuit by expanding a TLG to a MUX tree
+- `thverify` (alias `tvr`): write a CNF/PB file for the equivalence checking of two TLCs
+- `thpg` (alias `tp`): write a PB file for the output satisfiability of a TLC with PG encoding
+## Benchmark
+### iscas/itc/iwls
+- Selected circuits from iscas, itc, and iwls benchmark suites used in the paper 
+### bnn
+- The dense layers of activation-binarized neural networks trained on the MNIST dataset
+## Examples
 1. Collapse an AIG circuit iteratively with a fanout bound = 100
 ```
 abc 01> r benchmark/iscas/s38417.blif
@@ -70,6 +76,17 @@ bin/minisat+ compTH.opb
 abc 01> tvr -V 1 s38417_before_clp.th s38417_after_clp.th
 abc 02> quit
 bin/minisat compTH.dimacs
+```
+6. Check the output satisfiability of a TLC with PG encoding
+```
+abc 01> r benchmark/iscas/s38417.blif
+abc 02> comb
+abc 03> st
+abc 04> andpos
+abc 05> a2t
+abc 06> mt -B 100
+abc 07> tp -p
+bin/minisat+ pg.opb
 ```
 ## Contact:
 Please let us know if you have any problem using the code.  
