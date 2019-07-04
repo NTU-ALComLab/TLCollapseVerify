@@ -33,7 +33,8 @@ It has been compiled successfully with GCC\_VERSION=8.2.0 under CentOS 7.3.1611
 abc 01> r benchmark/iscas/s38417.blif
 abc 02> comb
 abc 03> fraig
-abc 04> mt -B 100
+abc 04> a2t
+abc 05> mt -B 100
 ```
 2. Collapse a synthesized TLC iteratively with a fanout bound = 100
 ```
