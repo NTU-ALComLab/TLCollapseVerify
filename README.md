@@ -52,8 +52,7 @@ abc 04> wt s38417_before_clp.th
 abc 05> mt -B 100
 abc 06> wt s38417_after_clp.th
 ```
-3. Verify equivalence using TL-to-MUX conversion and cec
-(Continued from the above example)
+3. Verify equivalence using TL-to-MUX conversion and `cec` (continued from the above example)
 ```
 abc 01> rt s38417_before_clp.th
 abc 02> t2m
@@ -63,15 +62,13 @@ abc 05> t2m
 abc 06> w s38417_after_clp.aig
 abc 07> cec s38417_before_clp.aig s38417_after_clp.aig
 ```
-4. Verify equivalence using TL-to-PB conversion and minisat+
-(Continued from the above example)
+4. Verify equivalence using TL-to-PB conversion and `minisat+` (continued from the above example)
 ```
 abc 01> tvr s38417_before_clp.th s38417_after_clp.th
 abc 02> quit
 bin/minisat+ compTH.opb
 ```
-5. Verify equivalence using TL-to-CNF conversion and minisat
-(Continued from the above example)
+5. Verify equivalence using TL-to-CNF conversion and `minisat` (continued from the above example)
 ```
 abc 01> tvr -V 1 s38417_before_clp.th s38417_after_clp.th
 abc 02> quit
