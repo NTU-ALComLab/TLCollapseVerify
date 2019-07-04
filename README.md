@@ -16,15 +16,15 @@ Type `make` to complie and the executable file is `bin/abc`
 make
 ```
 It has been compiled successfully with GCC\_VERSION=8.2.0 under CentOS 7.3.1611
-## Commands:
-### I/O:
+## Commands
+### I/O
 - `read_th` (alias `rt`): read a TLC file in the `.th` format (POs must be buffered)
 - `write_th` (alias `wt`): write the current TLC out in the `.th` format
 - `print_th` (alias `pt`): print the network statistics of the current TLC
-### Synthesis:
+### Synthesis
 - `aig2th` (alias `a2t`): convert an AIG circuit to a TLC by replacing AIG nodes with TLGs
 - `merge_th` (alias `mt`): the proposed collapsing-based TLC synthesis
-### Verification:
+### Verification
 - `th2mux` (alias `t2m`): convert a TLC to an AIG circuit by expanding a TLG to a MUX tree
 - `thverify` (alias `tvr`): write a CNF/PB file for the equivalence checking of two TLCs
 - `thpg` (alias `tp`): write a PB file for the output satisfiability of a TLC with PG encoding
@@ -85,6 +85,6 @@ abc 06> mt -B 100
 abc 07> tp -p
 bin/minisat+ pg.opb
 ```
-## Contact:
-Please let us know if you have any problem using the code.  
+## Contact
+Please let us know if you have any problem using the code
 Nian-Ze Lee: d04943019@ntu.edu.tw, nianzelee@gmail.com
