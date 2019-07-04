@@ -30,7 +30,7 @@ It has been compiled successfully with GCC\_VERSION=8.2.0 under CentOS 7.3.1611
 - `thpg` (alias `tp`): write a PB file for the output satisfiability of a TLC with PG encoding
 ## Benchmark
 ### iscas/itc/iwls
-- Selected circuits used in the paper 
+- Selected circuits from iscas, itc, and iwls benchmark suites used in the paper 
 ### bnn
 - The dense layers of activation-binarized neural networks trained on the MNIST dataset
 ## Examples
