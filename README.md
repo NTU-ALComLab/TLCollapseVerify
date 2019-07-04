@@ -46,11 +46,11 @@ abc 05> mt -B 100
 ```
 abc 01> r benchmark/iscas/s38417.blif
 abc 02> comb
-abc 02> fraig
-abc 03> synth1
-abc 04> wt s38417_before_clp.th
-abc 05> mt -B 100
-abc 06> wt s38417_after_clp.th
+abc 03> fraig
+abc 04> synth1
+abc 05> wt s38417_before_clp.th
+abc 06> mt -B 100
+abc 07> wt s38417_after_clp.th
 ```
 3. Verify equivalence using TL-to-MUX conversion and `cec` (continued from the above example)
 ```
