@@ -163,7 +163,7 @@ alias mt  "merge_th"
 ## Verification
 alias t2m "th2mux"
 alias tvr "thverify"
-alias thpg "tp"
+alias tp "thpg"
 
 # For experiment
 alias aig_no_ite "comb; fraig; ps; a2t; pt; mt; pt"

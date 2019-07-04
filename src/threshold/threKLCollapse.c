@@ -337,13 +337,13 @@ Th_ObjNormalCheck( const Thre_S * tObj )
 {
 	int Entry , i;
 	if ( Th_ObjIsConst(tObj) ) {
-		printf( "tObj id=%d is const\n" , tObj->Id );
+		//printf( "tObj id=%d is const\n" , tObj->Id );
 		return 0;
 	}
    Vec_IntForEachEntry( tObj->weights , Entry , i ) 
 	{
 		if ( Entry == 0 ) {
-			printf( "tObj(id=%d) %d-th fanin has 0 weight\n" , tObj->Id , i );
+			//printf( "tObj(id=%d) %d-th fanin has 0 weight\n" , tObj->Id , i );
 			return 0;
 		}
 	}
