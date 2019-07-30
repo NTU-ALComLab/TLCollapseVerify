@@ -4,6 +4,8 @@
 - Primary developer: Nian-Ze Lee from National Taiwan University
 - C implementation of algorithms proposed in [Analytic Approaches to the Collapse Operation and Equivalence Verification of Threshold Logic Circuits](https://ieeexplore.ieee.org/document/7827582/)
 - Algorithms and codes for threshold logic technology mapping proposed in [Threshold Logic Synthesis Based on Cut Pruning](https://ieeexplore.ieee.org/document/7372610/) by Augusto Neutzling et al.
+- Reference: Nian-Ze Lee, Hao-Yuan Kuo, Yi-Hsiang Lai, Jie-Hong R. Jiang:
+Analytic approaches to the collapse operation and equivalence verification of threshold logic circuits. ICCAD 2016: 5
 ## Contents
 1. [Installation](#installation)
 2. [Commands](#commands)
