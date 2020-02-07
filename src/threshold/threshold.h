@@ -172,6 +172,8 @@ extern void       Th_ProfilePrint       ();
 //===threCNF.c================================//
 
 extern void       func_EC_writeCNF      ( Abc_Ntk_t * , Vec_Ptr_t * , char * );
+extern void       delete_sortedNode     ( Thre_S * );
+extern void       my_Vec_StrPrintNum    ( Vec_Str_t * , int );
 
 //===thresholdNZ.c================================//
 
@@ -181,7 +183,9 @@ extern void       func_CNF_compareTH    ( Vec_Ptr_t * , Vec_Ptr_t * );
 //===threKLCollapse.c================================//
 
 extern void       Th_CollapseNtk         ( Vec_Ptr_t * , int , int );
+extern void       Th_CollapseNtk_tcad    ( Vec_Ptr_t * , int , int );
 extern void       Th_NtkDfs              ();
+extern int        Th_ObjIsFanin          ( const Thre_S * , int );
 
 //===threTh2Blif.c===================================//
 
@@ -194,6 +198,17 @@ extern Abc_Ntk_t* Th_Ntk2Mux             ( Vec_Ptr_t * , int , int );
 //===threThPG.c====================================//
 
 extern void Th_PBPGEncoding              ( Vec_Ptr_t * , int );
+
+//===threCalKL.c====================================//
+
+extern Pair_S*    Th_CalKLIf             ( const Thre_S * , const Thre_S * , int , int , int );
+extern Pair_S*    Th_CalKLDP             ( const Thre_S * , const Thre_S * , int , int , int );
+
+//===threMultiFout.c====================================//
+
+extern int Th_Check2FoutCollapse         ( const Thre_S * , const Thre_S * , int );
+extern int Th_CheckMultiFoutCollapse     ( const Thre_S * , int );
+extern int Th_CheckPairCollapse          ( const Thre_S * , const Thre_S * , int );
 
 #endif
 

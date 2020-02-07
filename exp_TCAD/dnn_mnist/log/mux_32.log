@@ -1,0 +1,24 @@
+ABC command line: "source exp_TCAD/dnn_mnist/tcl/mux.tcl".
+
+	moduleName:bnn_16.th
+	PIcount:32
+	POcount:32
+	TGcount:128
+  > Ntk2Mux : create pio ...
+  > Ntk2Mux : create mux (dynamic = yes , ahead = no) ...
+  > Ntk2Mux : connect Po ...
+mux convert time  =   417.45 sec
+Warning: Original current_TList destroyed.
+	moduleName:bnn_256.th
+	PIcount:32
+	POcount:32
+	TGcount:128
+  > Ntk2Mux : create pio ...
+  > Ntk2Mux : create mux (dynamic = yes , ahead = no) ...
+  > Ntk2Mux : connect Po ...
+Current network is replaced
+mux convert time  =   651.72 sec
+Networks are NOT EQUIVALENT.
+Verification failed for at least 4 outputs:  po14 po17 po20 ...
+Output po14: Value in Network1 = 0. Value in Network2 = 1.
+Input pattern:  pi16=0 pi06=0 pi05=0 pi03=0 pi22=0 pi26=0 pi28=0 pi11=0 pi24=0 pi07=0 pi15=0 pi19=0 pi20=0 pi09=0 pi00=0 pi01=0 pi25=0 pi23=0 pi10=0 pi21=0 pi17=0 pi29=0 pi04=0 pi08=0 pi31=0 pi13=0 pi02=0 pi18=0 pi14=0 pi27=0 pi30=0 pi12=0

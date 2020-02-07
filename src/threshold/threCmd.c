@@ -80,21 +80,21 @@ void
 Threshold_Init( Abc_Frame_t *pAbc)
 {
 	 Th_GlobalInit();
-    Cmd_CommandAdd( pAbc, "TLCollapseVerify", "read_th"     , Abc_CommandReadThreshold,  1 );
-    Cmd_CommandAdd( pAbc, "TLCollapseVerify", "write_th"    , Abc_CommandWriteThreshold, 0 );
-    Cmd_CommandAdd( pAbc, "TLCollapseVerify", "print_th"    , Abc_CommandPrintThreshold, 0 );
-    Cmd_CommandAdd( pAbc, "TLCollapseVerify", "aig2th"      , Abc_CommandAig2Th,         1 );
-    Cmd_CommandAdd( pAbc, "TLCollapseVerify", "merge_th"    , Abc_CommandMerge,          1 );
-    Cmd_CommandAdd( pAbc, "TLCollapseVerify", "th2mux"      , Abc_CommandTh2Mux,         1 );
-    Cmd_CommandAdd( pAbc, "TLCollapseVerify", "thverify"    , Abc_CommandThVerify,       0 );
-    Cmd_CommandAdd( pAbc, "TLCollapseVerify", "thpg"        , Abc_CommandThPGEncode,     0 );
-    //Cmd_CommandAdd( pAbc, "z Alcom", "th2blif"     , Abc_CommandTh2Blif,        0 );
-    //Cmd_CommandAdd( pAbc, "z Alcom", "PB_th"       , Abc_CommandPB_Threshold,   0 );
-    //Cmd_CommandAdd( pAbc, "z Alcom", "CNF_th"      , Abc_CommandCNF_Threshold,  0 );
-    //Cmd_CommandAdd( pAbc, "z Alcom", "NZ"          , Abc_CommandNZ,             1 );
-    //Cmd_CommandAdd( pAbc, "z Alcom", "OAO"         , Abc_CommandOAO,            0 );
-    //Cmd_CommandAdd( pAbc, "z Alcom", "test_th"     , Abc_CommandTestTH,         1 );
-    //Cmd_CommandAdd( pAbc, "z Alcom", "profile_th"  , Abc_CommandProfileTh,      0 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "read_th"     , Abc_CommandReadThreshold,  1 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "write_th"    , Abc_CommandWriteThreshold, 0 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "print_th"    , Abc_CommandPrintThreshold, 0 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "aig2th"      , Abc_CommandAig2Th,         1 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "merge_th"    , Abc_CommandMerge,          1 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "th2blif"     , Abc_CommandTh2Blif,        0 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "th2mux"      , Abc_CommandTh2Mux,         1 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "PB_th"       , Abc_CommandPB_Threshold,   0 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "CNF_th"      , Abc_CommandCNF_Threshold,  0 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "thverify"    , Abc_CommandThVerify,       0 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "thpg"        , Abc_CommandThPGEncode,     0 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "NZ"          , Abc_CommandNZ,             1 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "OAO"         , Abc_CommandOAO,            0 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "test_th"     , Abc_CommandTestTH,         1 );
+    Cmd_CommandAdd( pAbc, "z Alcom", "profile_th"  , Abc_CommandProfileTh,      0 );
 }
 
 void 
@@ -284,7 +284,7 @@ usage:
 int 
 Abc_CommandAig2Th( Abc_Frame_t * pAbc, int argc, char ** argv )
 {
-    FILE * pErr;
+    FILE * pOut, * pErr;
     Abc_Ntk_t * pNtk , * pNtkRes;
     int c;
     int fAllNodes      = 0;
@@ -292,6 +292,7 @@ Abc_CommandAig2Th( Abc_Frame_t * pAbc, int argc, char ** argv )
     int fCleanup       = 0;
 	 int fRemoveLatches = 0;
     pNtk = Abc_FrameReadNtk(pAbc);
+    pOut = Abc_FrameReadOut(pAbc);
     pErr = Abc_FrameReadErr(pAbc);
 
     Extra_UtilGetoptReset();
@@ -359,13 +360,14 @@ Abc_CommandMerge( Abc_Frame_t * pAbc, int argc, char ** argv )
 {
     FILE * pErr;
 	 int fIterative;
-    int c , i , fOutBound;
+    int c, i, fOutBound, fTCAD;
 	 abctime clk;
     pErr = Abc_FrameReadErr(pAbc);
 	 fIterative = 0;
 	 fOutBound  = -1;
+    fTCAD      = 0;
     Extra_UtilGetoptReset();
-    while ( ( c = Extra_UtilGetopt( argc, argv, "Bih" ) ) != EOF )
+    while ( ( c = Extra_UtilGetopt( argc, argv, "Bith" ) ) != EOF )
     {
        switch ( c )
 		 {
@@ -381,6 +383,9 @@ Abc_CommandMerge( Abc_Frame_t * pAbc, int argc, char ** argv )
 		    case 'i':
 			    fIterative ^= 1;
 			    break;
+		    case 't':
+			    fTCAD ^= 1;
+			    break;
 		    default:
              goto usage;
 		 }
@@ -390,10 +395,15 @@ Abc_CommandMerge( Abc_Frame_t * pAbc, int argc, char ** argv )
         return 1;
 	 }
 	 clk = Abc_Clock();
-	 if ( fOutBound == -1 ) Th_CollapseNtk( current_TList , fIterative , fOutBound );
+	 if ( fOutBound == -1 ) {
+       fTCAD ? Th_CollapseNtk_tcad( current_TList , fIterative , fOutBound ):
+               Th_CollapseNtk( current_TList , fIterative , fOutBound );
+    }
 	 else {
-	    for ( i = 1 ; i <= fOutBound ; ++i )
-	       Th_CollapseNtk( current_TList , fIterative , i );
+	    for ( i = 1 ; i <= fOutBound ; ++i ) {
+          fTCAD ? Th_CollapseNtk_tcad( current_TList , fIterative , i ):
+                  Th_CollapseNtk( current_TList , fIterative , i );
+       }
 	 }
     // sort current_TList and clean up NULL objects
     Th_NtkDfs();
@@ -402,8 +412,9 @@ Abc_CommandMerge( Abc_Frame_t * pAbc, int argc, char ** argv )
 usage:
     fprintf( pErr, "usage:    merge_th [-B <num>] [-ih]\n" );
     fprintf( pErr, "\t        merging process for TList.\n");
-    fprintf( pErr, "\t-B num   : collapse from single fanout to num fanout\n");
-    fprintf( pErr, "\t-i       : toggle iterative collapse\n");
+    fprintf( pErr, "\t-B num   : collapse from single fanout to num fanout [default=%d]\n", fOutBound);
+    fprintf( pErr, "\t-i       : toggle iterative collapse [default=%d]\n", fIterative);
+    fprintf( pErr, "\t-t       : collapse to fanouts (suggested by TCAD reviewer) [default=%d]\n", fTCAD);
     fprintf( pErr, "\t-h       : print the command usage\n");
 	 return 1;
 }
@@ -423,12 +434,13 @@ usage:
 int 
 Abc_CommandTh2Blif( Abc_Frame_t * pAbc, int argc, char ** argv )
 {
-    FILE * pErr;
+    FILE * pOut, * pErr;
     char ** pArgvNew;
 	 char *  FileName;
 	 int     nArgcNew , c;
 	 abctime clk;
 	 
+	 pOut = Abc_FrameReadOut(pAbc);
     pErr = Abc_FrameReadErr(pAbc);
 
     Extra_UtilGetoptReset();
@@ -480,7 +492,7 @@ usage:
 int 
 Abc_CommandTh2Mux( Abc_Frame_t * pAbc, int argc, char ** argv )
 {
-    FILE * pErr;
+    FILE * pOut, * pErr;
 	 Abc_Ntk_t * pNtk , * pNtkRes;
     int fDynamic , fAhead , c;
 	 abctime clk;
@@ -488,6 +500,7 @@ Abc_CommandTh2Mux( Abc_Frame_t * pAbc, int argc, char ** argv )
     fDynamic = 1;
     fAhead   = 0;
 	 pNtk = Abc_FrameReadNtk(pAbc);
+	 pOut = Abc_FrameReadOut(pAbc);
     pErr = Abc_FrameReadErr(pAbc);
 
     Extra_UtilGetoptReset();
@@ -547,7 +560,7 @@ usage:
 
 int Abc_CommandPB_Threshold( Abc_Frame_t * pAbc, int argc, char ** argv )
 {
-    FILE * pErr;
+    FILE * pOut, * pErr;
     Abc_Ntk_t * pNtk, * pNtkRes;
     char ** pArgvNew;
     char * FileName;
@@ -559,6 +572,7 @@ int Abc_CommandPB_Threshold( Abc_Frame_t * pAbc, int argc, char ** argv )
 	 int fRemoveLatches = 0;
 	 abctime clk;
     pNtk = Abc_FrameReadNtk(pAbc);
+    pOut = Abc_FrameReadOut(pAbc);
     pErr = Abc_FrameReadErr(pAbc);
     Extra_UtilGetoptReset();
     while ( ( c = Extra_UtilGetopt( argc, argv, "h" ) ) != EOF )
@@ -628,7 +642,7 @@ usage:
 int 
 Abc_CommandCNF_Threshold( Abc_Frame_t * pAbc, int argc, char ** argv )
 {    
-    FILE * pErr;
+    FILE * pOut, * pErr;
     Abc_Ntk_t * pNtk, * pNtkRes;
     char ** pArgvNew;
     char * FileName;
@@ -640,6 +654,7 @@ Abc_CommandCNF_Threshold( Abc_Frame_t * pAbc, int argc, char ** argv )
 	 int fRemoveLatches = 0;
 	 abctime clk;
     pNtk = Abc_FrameReadNtk(pAbc);
+    pOut = Abc_FrameReadOut(pAbc);
     pErr = Abc_FrameReadErr(pAbc);
     Extra_UtilGetoptReset();
     while ( ( c = Extra_UtilGetopt( argc, argv, "h" ) ) != EOF )
@@ -781,7 +796,8 @@ usage:
 int 
 Abc_CommandThPGEncode( Abc_Frame_t * pAbc, int argc, char ** argv )
 {
-   int fPG, c;
+   char ** pArgvNew;
+   int nArgcNew, fPG, c;
    fPG = 0;
    Extra_UtilGetoptReset();
    while ( ( c = Extra_UtilGetopt( argc , argv , "ph" ) ) != EOF )
@@ -796,6 +812,8 @@ Abc_CommandThPGEncode( Abc_Frame_t * pAbc, int argc, char ** argv )
            goto usage;
        }
    }
+   pArgvNew = argv + globalUtilOptind;
+   nArgcNew = argc - globalUtilOptind;
    if ( !current_TList ) {
       Abc_Print(-1, "current_TList is empty!\n");
       goto usage;
