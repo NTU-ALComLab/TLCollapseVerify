@@ -69,9 +69,18 @@ $ bin/minisat compTH.dimacs
 ```
 6. Check the output satisfiability of a TLC using the PB-based method with PG encoding (`pg_and` is defined in file abc.rc)
 ```
-abc 01> r exp_TCAD/collapse/benchmark/iscas_itc/s38417.blif
+abc 01> r exp_TCAD/pg_encoding/benchmark/b14.blif
 abc 02> pg_and
+abc 03> quit
+$ bin/minisat+ no_pg.opb
 $ bin/minisat+ pg.opb
 ```
+## Experiments
+Directory `exp_TCAD` contains all benchmarks, scripts, log files, and data in the experiments. Specifically:
+1. Sub-directory `collapse` is for the collapsing-based synthesis experiments
+2. Sub-directory `eqcheck` is for the verification experiments between TLCs before and after collapsing
+3. Sub-directory `pg_encoding` is for the PG encoding experiments
+4. Sub-directory `high_fanin` is for the translation scalability experiments
+5. Sub-directory `dnn_mnist` is for the activation-binarized neural networks experiments
 ## Contact
 Please send an email to Nian-Ze Lee (d04943019@ntu.edu.tw, nianzelee@gmail.com) if there is any problem.
