@@ -17,7 +17,7 @@ Type `make` to complie and the executable file is `bin/abc`
 ```
 make
 ```
-The source code has been compiled successfully with GCC\_VERSION=8.2.0 under CentOS 7.3.1611
+The source code has been compiled successfully with GCC\_VERSION=8.2.0 under CentOS 7.3.1611/Ubuntu 18.04 LTS
 ## Commands
 ### I/O
 - `read_th` (alias `rt`): read a TL circuit (TLC) file in the `.th` format (POs must be buffered)
