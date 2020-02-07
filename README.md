@@ -36,6 +36,8 @@ The source code has been compiled successfully with GCC\_VERSION=8.2.0 under Cen
 abc 01> r exp_TCAD/collapse/benchmark/iscas_itc/s38417.blif
 abc 02> aig_syn
 abc 03> mt -B 100
+abc 04> pt
+abc 05> q
 ```
 2. Collapse a synthesized TLC iteratively with a fanout bound = 100 (`tl_syn` is defined in file abc.rc)
 ```
@@ -43,7 +45,9 @@ abc 01> r exp_TCAD/collapse/benchmark/iscas_itc/s38417.blif
 abc 02> tl_syn
 abc 03> wt s38417_before_clp.th
 abc 04> mt -B 100
-abc 05> wt s38417_after_clp.th
+abc 05> pt
+abc 06> wt s38417_after_clp.th
+abc 07> q
 ```
 3. Verify equivalence using the TL-to-MUX translation and ABC command `cec` (continued from the above example)
 ```
@@ -54,24 +58,25 @@ abc 04> rt s38417_after_clp.th
 abc 05> t2m
 abc 06> w s38417_after_clp.aig
 abc 07> cec s38417_before_clp.aig s38417_after_clp.aig
+abc 08> q
 ```
 4. Verify equivalence using the TL-to-PB translation and `minisat+` (continued from the above example)
 ```
 abc 01> tvr s38417_before_clp.th s38417_after_clp.th
-abc 02> quit
+abc 02> q
 $ bin/minisat+ compTH.opb
 ```
 5. Verify equivalence using the TL-to-CNF translation and `minisat` (continued from the above example)
 ```
 abc 01> tvr -V 1 s38417_before_clp.th s38417_after_clp.th
-abc 02> quit
+abc 02> q
 $ bin/minisat compTH.dimacs
 ```
 6. Check the output satisfiability of a TLC using the PB-based method with PG encoding (`pg_and` is defined in file abc.rc)
 ```
 abc 01> r exp_TCAD/pg_encoding/benchmark/b14.blif
 abc 02> pg_and
-abc 03> quit
+abc 03> q
 $ bin/minisat+ no_pg.opb
 $ bin/minisat+ pg.opb
 ```
