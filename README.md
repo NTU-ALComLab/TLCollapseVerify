@@ -88,4 +88,4 @@ Directory `exp_TCAD` contains all benchmarks, scripts, log files, and data in th
 4. Sub-directory `high_fanin` is for the translation scalability experiments
 5. Sub-directory `dnn_mnist` is for the activation-binarized neural networks experiments
 ## Contact
-Please send an email to Nian-Ze Lee (d04943019@ntu.edu.tw, nianzelee@gmail.com) if there is any problem.
+Please send an email to Nian-Ze Lee (nian-ze.lee@sosy.ifi.lmu.de) if there is any problem.
